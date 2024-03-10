@@ -1,0 +1,55 @@
+body {
+  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+  height: 100%;
+}
+
+.piano {
+  width: 100%;
+  height: auto;
+}
+
+.key-white {
+  fill: white;
+  stroke:black;
+  stroke-width:1;
+  cursor:pointer;
+  margin:2px;
+}
+
+.key-white.active {
+  fill:#9e9e9e;
+  stroke:black solid 1px;
+  cursor:pointer;
+  stroke-width:1;
+}
+
+.key-black {
+  fill:black;
+  stroke-width:1;
+  cursor:pointer;
+  margin:2px;
+}
+
+.key-black.active {
+  fill:#515151;
+  stroke:black solid 1px;
+  cursor:pointer;
+  stroke-width:1;
+}
+
+.key-text {
+  font-family: "Noto Serif";
+  font-size: 18px;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.note-text {
+  font-family: "Noto Serif";
+  font-size: 18px;
+  text-anchor: middle;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
