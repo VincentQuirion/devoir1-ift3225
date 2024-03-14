@@ -13,95 +13,143 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="piano.js"></script>
-
-    <script>
-      function showContent(id) {
-        $('.content').hide(); // Hide all content divs
-        $('#' + id).show();   // Show the content div with the given id
-      }
-    </script>
   </head>
-  <body class="h-100 text-center text-white bg-dark">
-
+  <body class="h-100 text-center text-white">
     <main>
-      <h1 class="display-1 text-center">Cycle des quintes</h1>
+      <div class="container">
+        <div class="row">
+          <div class="col-7">
+            <div class="qb-container h-100">
+              <div class="qb">
+                Test
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <svg class="cf" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <mask id="mask-center">
+                  <circle cx="150" cy="150" r="150" fill="white"/> <!-- White is visible -->
+                  <circle cx="150" cy="150" r="100" fill="black"/> <!-- Black is invisible -->
+                </mask>
+              </defs>
+        
+              <circle cx="150" cy="150" r="140" fill="white" stroke="black" stroke-width="2" mask="url(#mask-center)" />
+              <circle cx="150" cy="150" r="100" fill="none" stroke="black" stroke-width="2" />
 
-      <div class="container" id="piano">
-        <!-- Polygon shapes for piano from: https://hackernoon.com/create-a-piano-app-with-javascript-97dbad1ff28c -->
-        <svg class="piano" viewBox="0 0 450 280">
-          <polygon class="key-white" data-key="65"  data-note="C"  points="0,30 30,30 30,120 45,120 45,240 0,240 0,30"/>
-          <polygon class="key-white" data-key="83"  data-note="D"  points="45,120 60,120 60,30 75,30 75,120 90,120 90,240 45,240 45,120"/>
-          <polygon class="key-white" data-key="68"  data-note="E"  points="105,30 135,30 135,240 90,240 90,120 105,120 105,30"/>
-          <polygon class="key-white" data-key="70"  data-note="F"  points="135,30 165,30 165,120 180,120 180,240 135,240 135,30"/>
-          <polygon class="key-white" data-key="71"  data-note="G"  points="180,120 195,120 195,30 210,30 210,120 225,120 225,240 180,240 180,120"/>
-          <polygon class="key-white" data-key="72"  data-note="A"  points="225,120 240,120 240,30 255,30 255,120 270,120 270,240 225,240 225,120"/>
-          <polygon class="key-white" data-key="74"  data-note="B"  points="270,120 285,120 285,30 315,30 315,240 270,240 270,120"/>
-          <polygon class="key-white" data-key="75"  data-note="C"  points="315,30 345,30 345,120 360,120 360,240 315,240 315,30"/>
-          <polygon class="key-white" data-key="76"  data-note="D"  points="360,120 375,120 375,30 390,30 390,120 405,120 405,240 360,240"/>
-          <polygon class="key-white" data-key="186" data-note="E"  points="405,120 420,120 420,30 450,30 450,240 405,240 405,120"/>
-          <polygon class="key-black" data-key="87"  data-note="C#" points="30,30 60,30 60,120 30,120 30,30"/>
-          <polygon class="key-black" data-key="69"  data-note="D#" points="75,30 105,30 105,120 75,120 75,30"/>
-          <polygon class="key-black" data-key="84"  data-note="F#" points="165,30 195,30 195,120 165,120 165,30"/>
-          <polygon class="key-black" data-key="89"  data-note="G#" points="210,30 240,30 240,120 210,120 210,30"/>
-          <polygon class="key-black" data-key="85"  data-note="A#" points="255,30 285,30 285,120 255,120 255,30"/>
-          <polygon class="key-black" data-key="79"  data-note="C#" points="345,30 375,30 375,120 345,120 345,30"/>
-          <polygon class="key-black" data-key="80"  data-note="D#" points="390,30 420,30 420,120 390,120 390,30"/>
-          
-          <text class="key-text" x="20"  y="225" data-key="65"  data-note="C"  fill="black">A</text>
-          <text class="key-text" x="65"  y="225" data-key="83"  data-note="D"  fill="black">S</text>
-          <text class="key-text" x="110" y="225" data-key="68"  data-note="E"  fill="black">D</text>
-          <text class="key-text" x="155" y="225" data-key="70"  data-note="F"  fill="black">F</text>
-          <text class="key-text" x="200" y="225" data-key="71"  data-note="G"  fill="black">G</text>
-          <text class="key-text" x="245" y="225" data-key="72"  data-note="A"  fill="black">H</text>
-          <text class="key-text" x="290" y="225" data-key="74"  data-note="B"  fill="black">J</text>
-          <text class="key-text" x="335" y="225" data-key="75"  data-note="C"  fill="black">K</text>
-          <text class="key-text" x="380" y="225" data-key="76"  data-note="D"  fill="black">L</text>
-          <text class="key-text" x="425" y="225" data-key="186" data-note="E"  fill="black">;</text>
-          <text class="key-text" x="45"  y="110" data-key="87"  data-note="C#" fill="white">W</text>
-          <text class="key-text" x="90"  y="110" data-key="69"  data-note="D#" fill="white">E</text>
-          <text class="key-text" x="180" y="110" data-key="84"  data-note="F#" fill="white">T</text>
-          <text class="key-text" x="225" y="110" data-key="89"  data-note="G#" fill="white">Y</text>
-          <text class="key-text" x="270" y="110" data-key="85"  data-note="A#" fill="white">U</text>
-          <text class="key-text" x="360" y="110" data-key="79"  data-note="C#" fill="white">O</text>
-          <text class="key-text" x="405" y="110" data-key="80"  data-note="D#" fill="white">P</text>
-
-          <text class="note-text" x="20"  y="260" data-key="65"  data-note="C"  fill="red">C</text>
-          <text class="note-text" x="65"  y="260" data-key="83"  data-note="D"  fill="red">D</text>
-          <text class="note-text" x="110" y="260" data-key="68"  data-note="E"  fill="red">E</text>
-          <text class="note-text" x="155" y="260" data-key="70"  data-note="F"  fill="red">F</text>
-          <text class="note-text" x="200" y="260" data-key="71"  data-note="G"  fill="red">G</text>
-          <text class="note-text" x="245" y="260" data-key="72"  data-note="A"  fill="red">A</text>
-          <text class="note-text" x="290" y="260" data-key="74"  data-note="B"  fill="red">B</text>
-          <text class="note-text" x="335" y="260" data-key="75"  data-note="C"  fill="red">C</text>
-          <text class="note-text" x="380" y="260" data-key="76"  data-note="D"  fill="red">D</text>
-          <text class="note-text" x="425" y="260" data-key="186" data-note="E"  fill="red">E</text>
-          <text class="note-text" x="45"  y="20"  data-key="87"  data-note="C#" fill="red">C#</text>
-          <text class="note-text" x="90"  y="20"  data-key="69"  data-note="D#" fill="red">D#</text>
-          <text class="note-text" x="180" y="20"  data-key="84"  data-note="F#" fill="red">F#</text>
-          <text class="note-text" x="225" y="20"  data-key="89"  data-note="G#" fill="red">G#</text>
-          <text class="note-text" x="270" y="20"  data-key="85"  data-note="A#" fill="red">A#</text>
-          <text class="note-text" x="360" y="20"  data-key="79"  data-note="C#" fill="red">C#</text>
-          <text class="note-text" x="405" y="20"  data-key="80"  data-note="D#" fill="red">D#</text>
-        </svg>
+              <circle class="qb-score" cx="150" cy="150" r="50" fill="black" />
     
-        <audio data-key="65"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/040.wav"></audio>
-        <audio data-key="87"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/041.wav"></audio>
-        <audio data-key="83"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/042.wav"></audio>
-        <audio data-key="69"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/043.wav"></audio>
-        <audio data-key="68"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/044.wav"></audio>
-        <audio data-key="70"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/045.wav"></audio>
-        <audio data-key="84"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/046.wav"></audio>
-        <audio data-key="71"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/047.wav"></audio>
-        <audio data-key="89"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/048.wav"></audio>
-        <audio data-key="72"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/049.wav"></audio>
-        <audio data-key="85"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/050.wav"></audio>
-        <audio data-key="74"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/051.wav"></audio>
-        <audio data-key="75"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/052.wav"></audio>
-        <audio data-key="79"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/053.wav"></audio>
-        <audio data-key="76"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/054.wav"></audio>
-        <audio data-key="80"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/055.wav"></audio>
-        <audio data-key="186" src="http://carolinegabriel.com/demo/js-keyboard/sounds/056.wav"></audio>
+              <circle id="cf-cursor" cx="150" cy="150" r="18" fill="none" stroke="red" stroke-width="2" />
+    
+              <text class="cf-note" x="150" y="35"  data-note="C"  fill="black">Do</text>
+              <text class="cf-note" x="212" y="51"  data-note="G"  fill="black">Sol</text>
+              <text class="cf-note" x="255" y="95"  data-note="D"  fill="black">Ré</text>
+              <text class="cf-note" x="270" y="150" data-note="A"  fill="black">La</text>
+              <text class="cf-note" x="255" y="210" data-note="E"  fill="black">Mi</text>
+              <text class="cf-note" x="212" y="260" data-note="B"  fill="black">Si</text>
+              <text class="cf-note" x="150" y="275" data-note="F#" fill="black">Fa♯</text>
+              <text class="cf-note" x="88"  y="260" data-note="C#" fill="black">Ré♭</text>
+              <text class="cf-note" x="45"  y="210" data-note="G#" fill="black">La♭</text>
+              <text class="cf-note" x="30"  y="150" data-note="G#" fill="black">Mi♭</text>
+              <text class="cf-note" x="45"  y="95"  data-note="C#" fill="black">Si♭</text>
+              <text class="cf-note" x="88"  y="51"  data-note="F"  fill="black">Fa</text>
+            </svg>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="piano-container">
+              <div class="piano-border">
+                <svg class="piano" viewBox="0 0 510 270">
+                  <!-- Polygon shapes for piano from: https://hackernoon.com/create-a-piano-app-with-javascript-97dbad1ff28c -->
+                  <polygon class="key-white" data-key="65" data-note="C" points="30,30 60,30 60,120 75,120 75,240 30,240 30,30"/>
+                  <polygon class="key-white" data-key="83" data-note="D" points="75,120 90,120 90,30 105,30 105,120 120,120 120,240 75,240 75,120"/>
+                  <polygon class="key-white" data-key="68" data-note="E" points="135,30 165,30 165,240 120,240 120,120 135,120 135,30"/>
+                  <polygon class="key-white" data-key="70" data-note="F" points="165,30 195,30 195,120 210,120 210,240 165,240 165,30"/>
+                  <polygon class="key-white" data-key="71" data-note="G" points="210,120 225,120 225,30 240,30 240,120 255,120 255,240 210,240 210,120"/>
+                  <polygon class="key-white" data-key="72" data-note="A" points="255,120 270,120 270,30 285,30 285,120 300,120 300,240 255,240 255,120"/>
+                  <polygon class="key-white" data-key="74" data-note="B" points="300,120 315,120 315,30 345,30 345,240 300,240 300,120"/>
+                  <polygon class="key-white" data-key="75" data-note="C" points="345,30 375,30 375,120 390,120 390,240 345,240 345,30"/>
+                  <polygon class="key-white" data-key="76" data-note="D" points="390,120 405,120 405,30 420,30 420,120 435,120 435,240 390,240"/>
+                  <polygon class="key-white" data-key="186" data-note="E" points="435,120 450,120 450,30 480,30 480,240 435,240 435,120"/>
+                  <polygon class="key-black" data-key="87" data-note="C#" points="60,30 90,30 90,120 60,120 60,30"/>
+                  <polygon class="key-black" data-key="69" data-note="D#" points="105,30 135,30 135,120 105,120 105,30"/>
+                  <polygon class="key-black" data-key="84" data-note="F#" points="195,30 225,30 225,120 195,120 195,30"/>
+                  <polygon class="key-black" data-key="89" data-note="G#" points="240,30 270,30 270,120 240,120 240,30"/>
+                  <polygon class="key-black" data-key="85" data-note="A#" points="285,30 315,30 315,120 285,120 285,30"/>
+                  <polygon class="key-black" data-key="79" data-note="C#" points="375,30 405,30 405,120 375,120 375,30"/>
+                  <polygon class="key-black" data-key="80" data-note="D#" points="420,30 450,30 450,120 420,120 420,30"/>
+                  
+                  <text class="key-text" x="50"  y="225" data-key="65"  data-note="C"  fill="black">A</text>
+                  <text class="key-text" x="95"  y="225" data-key="83"  data-note="D"  fill="black">S</text>
+                  <text class="key-text" x="140" y="225" data-key="68"  data-note="E"  fill="black">D</text>
+                  <text class="key-text" x="185" y="225" data-key="70"  data-note="F"  fill="black">F</text>
+                  <text class="key-text" x="230" y="225" data-key="71"  data-note="G"  fill="black">G</text>
+                  <text class="key-text" x="275" y="225" data-key="72"  data-note="A"  fill="black">H</text>
+                  <text class="key-text" x="320" y="225" data-key="74"  data-note="B"  fill="black">J</text>
+                  <text class="key-text" x="365" y="225" data-key="75"  data-note="C"  fill="black">K</text>
+                  <text class="key-text" x="410" y="225" data-key="76"  data-note="D"  fill="black">L</text>
+                  <text class="key-text" x="455" y="225" data-key="186" data-note="E"  fill="black">;</text>
+                  <text class="key-text" x="75"  y="110" data-key="87"  data-note="C#" fill="white">W</text>
+                  <text class="key-text" x="120" y="110" data-key="69"  data-note="D#" fill="white">E</text>
+                  <text class="key-text" x="210" y="110" data-key="84"  data-note="F#" fill="white">T</text>
+                  <text class="key-text" x="255" y="110" data-key="89"  data-note="G#" fill="white">Y</text>
+                  <text class="key-text" x="300" y="110" data-key="85"  data-note="A#" fill="white">U</text>
+                  <text class="key-text" x="390" y="110" data-key="79"  data-note="C#" fill="white">O</text>
+                  <text class="key-text" x="435" y="110" data-key="80"  data-note="D#" fill="white">P</text>
+        
+                  <text class="note-text" x="50"  y="260" data-key="65"  data-note="C"  fill="red">Do</text>
+                  <text class="note-text" x="95"  y="260" data-key="83"  data-note="D"  fill="red">Ré</text>
+                  <text class="note-text" x="140" y="260" data-key="68"  data-note="E"  fill="red">Mi</text>
+                  <text class="note-text" x="185" y="260" data-key="70"  data-note="F"  fill="red">Fa</text>
+                  <text class="note-text" x="230" y="260" data-key="71"  data-note="G"  fill="red">Sol</text>
+                  <text class="note-text" x="275" y="260" data-key="72"  data-note="A"  fill="red">La</text>
+                  <text class="note-text" x="320" y="260" data-key="74"  data-note="B"  fill="red">Si</text>
+                  <text class="note-text" x="365" y="260" data-key="75"  data-note="C"  fill="red">Do</text>
+                  <text class="note-text" x="410" y="260" data-key="76"  data-note="D"  fill="red">Ré</text>
+                  <text class="note-text" x="455" y="260" data-key="186" data-note="E"  fill="red">Mi</text>
+                  <text class="note-text" x="75"  y="20"  data-key="87"  data-note="C#" fill="red">Do♯</text>
+                  <text class="note-text" x="120" y="20"  data-key="69"  data-note="D#" fill="red">Ré♯</text>
+                  <text class="note-text" x="210" y="20"  data-key="84"  data-note="F#" fill="red">Fa♯</text>
+                  <text class="note-text" x="255" y="20"  data-key="89"  data-note="G#" fill="red">Sol♯</text>
+                  <text class="note-text" x="300" y="20"  data-key="85"  data-note="A#" fill="red">La♯</text>
+                  <text class="note-text" x="390" y="20"  data-key="79"  data-note="C#" fill="red">Do♯</text>
+                  <text class="note-text" x="435" y="20"  data-key="80"  data-note="D#" fill="red">Ré♯</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <audio data-key="65"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/040.wav"></audio>
+      <audio data-key="87"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/041.wav"></audio>
+      <audio data-key="83"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/042.wav"></audio>
+      <audio data-key="69"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/043.wav"></audio>
+      <audio data-key="68"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/044.wav"></audio>
+      <audio data-key="70"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/045.wav"></audio>
+      <audio data-key="84"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/046.wav"></audio>
+      <audio data-key="71"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/047.wav"></audio>
+      <audio data-key="89"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/048.wav"></audio>
+      <audio data-key="72"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/049.wav"></audio>
+      <audio data-key="85"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/050.wav"></audio>
+      <audio data-key="74"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/051.wav"></audio>
+      <audio data-key="75"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/052.wav"></audio>
+      <audio data-key="79"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/053.wav"></audio>
+      <audio data-key="76"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/054.wav"></audio>
+      <audio data-key="80"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/055.wav"></audio>
+      <audio data-key="186" src="http://carolinegabriel.com/demo/js-keyboard/sounds/056.wav"></audio>
+
+
+      <script>
+        // Rotate the circle every 100 milliseconds
+        var angle = 0;
+        setInterval(function () {
+          angle += 30;
+          updateCirclePosition(angle);
+        }, 2000);
+      </script>
+
     </main>
   </body>
 </html>

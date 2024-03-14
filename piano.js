@@ -29,6 +29,25 @@ function playNote(data_key)
   }, 1000);
 }
 
+function rotatePoint(point, center, angle) {
+  var radians = angle * (Math.PI / 180);
+  var cos = Math.cos(radians);
+  var sin = Math.sin(radians);
+  var x = center.x + (point.x - center.x) * cos - (point.y - center.y) * sin;
+  var y = center.y + (point.x - center.x) * sin + (point.y - center.y) * cos;
+  return { x: x, y: y };
+}
+
+function updateCirclePosition(angle) {
+  var circle = document.getElementById("cf-cursor");
+  var center = { x: 150, y: 150 };
+  var originalPoint = { x: 150, y: 30 };
+  var rotatedPoint = rotatePoint(originalPoint, center, angle);
+  var translateX = rotatedPoint.x - center.x;
+  var translateY = rotatedPoint.y - center.y;
+  circle.setAttribute("transform", "translate(" + translateX + "," + translateY + ")");
+}
+
 //
 // Event listeners
 //
