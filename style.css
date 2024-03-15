@@ -1,39 +1,82 @@
 /* General */
 
 body {
-  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, 1);
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, 1);
   height: 100%;
-  background-image: url("background.jpeg");
+  background-image: url("background.png");
   background-size: cover;
+}
+
+.text-aqua {
+  color: aqua;
+}
+
+.glass {
+  background-color: #0000009e;
+  width: 100%;
+  height: 100%;
+  border-radius: 2rem;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 1);
+  backdrop-filter: blur(12px);
+}
+
+.filter-aqua {
+  /* Computed from: https://codepen.io/sosuke/pen/Pjoqqp */
+  filter: invert(84%) sepia(58%) saturate(4490%) hue-rotate(118deg) brightness(110%) contrast(101%);
 }
 
 /* Question box */
 
 .qb-container {
-  padding: 10% 5% 10% 0;
   width: 100%;
   height: 100%;
+  padding: 5% 0% 5% 0%;
+  position: absolute; 
+  top: 0; 
+  left: 0;
 }
 
-.qb {
-  background-color: #0000009e;
-  width: 100%;
+.qb-content {
   height: 100%;
-  border-radius: 2rem;
-  /* Lots of shadow */
+  padding-right: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#qb-scoreboard {
+  background-color: #0000009e;
   box-shadow: 0 0 30px rgba(0, 0, 0, 1);
   backdrop-filter: blur(12px);
 }
 
-.qb-score
-{
-  background-color: #0000009e;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 1);
-  backdrop-filter: blur(12px);
+#qb-score {
+  font-family: "Noto Serif";
+  font-size: 18px;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+#qb-timer {
+  fill: none;
+  stroke: aqua;
+  stroke-width: 6;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  stroke-linecap: round;
+  transform-origin: center center;
+  transform: rotate(-90deg);
+}
+
+#qb-title {
+  font-family: "Noto Serif";
+  text-anchor: start;
 }
 
 /* Circle of fifths */
+
+.cf-container {
+  padding: 0% 0% 0% 50%;
+}
 
 .cf {
   filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.5));
@@ -47,7 +90,7 @@ body {
 }
 
 #cf-cursor {
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.4s ease-in-out;
 }
 
 /* Piano */

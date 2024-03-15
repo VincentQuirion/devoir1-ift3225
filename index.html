@@ -1,65 +1,245 @@
-<!-- Boilerplate html accessible tiré de https://www.accessibility-developer-guide.com/examples/html_boilerplate/ -->
-<!DOCTYPE html>
-<html lang="fr">
+<!doctype html>
+<html lang="en" class="h-100">
   <head>
-    <meta charset="utf-8" />
-    <title>Pratique du cycle de quinte - Acceuil</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- On charge le css de bootstrap -->
-    <!-- On ne chargera pas le js, 
-        on souhaite tout contrôler le js s'assurer du bon comportement de la page lorsque js est désactivé -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Redirige vers la page noscript si le js n'est pas activé -->
-    <noscript>
-        <meta http-equiv="refresh" content="0; url=./noscript.html" />
-    </noscript>
-</head>
-  <body>
-    <!-- Code adapté de https://getbootstrap.com/docs/5.3/examples/features/# -->
-    <div class="container px-4 py-5 d-flex vh-100 justify-content-center flex-column" id="featured-3">
-        <h2 class="pb-2 border-bottom">Pratique du cycle de quinte - Jeux disponibles</h2>
-        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-          <div class="feature col">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="#0d6efd" class="bi bi-1-square-fill" viewBox="0 0 16 16">
-                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm7.283 4.002V12H7.971V5.338h-.065L6.072 6.656V5.385l1.899-1.383z"/>
-                  </svg>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cycle de quinte</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="interactive.js"></script>
+  </head>
+  <body class="h-100 text-center text-white">
+    <main class="h-100">
+      <div class="container h-100">
+        <div class="row ratio ratio-21x9">
+          <div class="col h-100" style="position: relative;">
+            <div class="qb-container">
+              <div class="glass">
+                <div class="qb-content align-self-center text-aqua">
+                  <div id="qb-home">
+                    <h1 class="display-1">Cycle de quinte</h1>
+                    <p>Choisissez un mode de jeu</p>
+                    <div class="btn-group" role="group" aria-label="Mode de jeu">
+                      <button type="button" class="btn btn-outline-info" id="qb-mode-1-btn">Tour du cercle</button>
+                      <button type="button" class="btn btn-outline-info" id="qb-mode-2-btn">Majeur/Mineur</button>
+                      <button type="button" class="btn btn-outline-info" id="qb-mode-3-btn">Armures</button>
+                    </div>
+                  </div>
+                  <div id="qb-mode-1" class="d-none">
+                    <h1 class="display-1">Tour du cercle</h1>
+                    <p>Faites le tour du cercle de quinte a partir de: </p>
+                    <p id="qb-mode-1-start">Do</p>
+                  </div>
+                  <div id="qb-mode-2" class="d-none">
+                    <h1 class="display-1">Majeur/Mineur</h1>
+                    <p>Donné la mineur de la majeur: </p>
+                    <p id="qb-mode-2-major">Do</p>
+                  </div>
+                  <div id="qb-mode-3" class="d-none">
+                    <h1 class="display-1">Armures</h1>
+                    <p>Donné la majeur de l'armure suivante: </p>
+                    <img id="qb-mode-3-img" class="w-100 filter-aqua"/>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h3 class="fs-2 text-body-emphasis">Quiz Altérations</h3>
-            <p>Saurez-vous trouver le type et le nombre d'altérations des tonalités?</p>
-            <a href="alterations.html" class="icon-link">
-              Jouer!
-              <svg class="bi"><use xlink:href="#chevron-right"/></svg>
-            </a>
+            <div class="cf-container w-100 h-100">
+              <svg class="cf w-100 h-100" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <mask id="mask-center">
+                    <circle cx="150" cy="150" r="150" fill="white"/> <!-- White is visible -->
+                    <circle cx="150" cy="150" r="100" fill="black"/> <!-- Black is invisible -->
+                  </mask>
+                </defs>
+          
+                <circle cx="150" cy="150" r="140" fill="white" stroke="black" stroke-width="2" mask="url(#mask-center)" />
+                <circle cx="150" cy="150" r="100" fill="none" stroke="black" stroke-width="2" />
+  
+                <circle id="cf-cursor" cx="150" cy="150" r="18" stroke="red" fill="none" stroke-width="4" />
+  
+                <circle id="qb-scoreboard" cx="150" cy="150" r="50" fill="black" />
+                <circle id="qb-timer" cx="150" cy="150" r="50" pathLength="1"/>
+                <text id="qb-score" x="150" y="155" fill="aqua">0</text>
+      
+                <text class="cf-note" x="150" y="35"  data-note="do"  data-angle="0"   fill="black">Do</text>
+                <text class="cf-note" x="212" y="51"  data-note="sol" data-angle="30"  fill="black">Sol</text>
+                <text class="cf-note" x="255" y="95"  data-note="ré"  data-angle="60"  fill="black">Ré</text>
+                <text class="cf-note" x="270" y="150" data-note="la"  data-angle="90"  fill="black">La</text>
+                <text class="cf-note" x="255" y="210" data-note="mi"  data-angle="120" fill="black">Mi</text>
+                <text class="cf-note" x="212" y="260" data-note="si"  data-angle="150" fill="black">Si</text>
+                <text class="cf-note" x="150" y="275" data-note="fa♯" data-angle="180" fill="black">Fa♯</text>
+                <text class="cf-note" x="88"  y="260" data-note="ré♭" data-angle="210" fill="black">Ré♭</text>
+                <text class="cf-note" x="45"  y="210" data-note="la♭" data-angle="240" fill="black">La♭</text>
+                <text class="cf-note" x="30"  y="150" data-note="mi♭" data-angle="270" fill="black">Mi♭</text>
+                <text class="cf-note" x="45"  y="95"  data-note="si♭" data-angle="300" fill="black">Si♭</text>
+                <text class="cf-note" x="88"  y="51"  data-note="fa"  data-angle="330" fill="black">Fa</text>
+              </svg>
+            </div>
+          </div> 
+        </div>
+            
+        <div id="rows-piano" class="row d-none">
+          <div class="col">
+            <div class="piano-container">
+              <div class="piano-border">
+                <svg class="piano" viewBox="0 0 510 270">
+                  <!-- Polygon shapes for piano from: https://hackernoon.com/create-a-piano-app-with-javascript-97dbad1ff28c -->
+                  <polygon class="key-white" data-key="65"  data-note="do"   points="30,30 60,30 60,120 75,120 75,240 30,240 30,30"/>
+                  <polygon class="key-white" data-key="83"  data-note="ré"   points="75,120 90,120 90,30 105,30 105,120 120,120 120,240 75,240 75,120"/>
+                  <polygon class="key-white" data-key="68"  data-note="mi"   points="135,30 165,30 165,240 120,240 120,120 135,120 135,30"/>
+                  <polygon class="key-white" data-key="70"  data-note="fa"   points="165,30 195,30 195,120 210,120 210,240 165,240 165,30"/>
+                  <polygon class="key-white" data-key="71"  data-note="sol"  points="210,120 225,120 225,30 240,30 240,120 255,120 255,240 210,240 210,120"/>
+                  <polygon class="key-white" data-key="72"  data-note="la"   points="255,120 270,120 270,30 285,30 285,120 300,120 300,240 255,240 255,120"/>
+                  <polygon class="key-white" data-key="74"  data-note="si"   points="300,120 315,120 315,30 345,30 345,240 300,240 300,120"/>
+                  <polygon class="key-white" data-key="75"  data-note="do"   points="345,30 375,30 375,120 390,120 390,240 345,240 345,30"/>
+                  <polygon class="key-white" data-key="76"  data-note="ré"   points="390,120 405,120 405,30 420,30 420,120 435,120 435,240 390,240"/>
+                  <polygon class="key-white" data-key="186" data-note="mi"   points="435,120 450,120 450,30 480,30 480,240 435,240 435,120"/>
+                  <polygon class="key-black" data-key="87"  data-note="do♯"  points="60,30 90,30 90,120 60,120 60,30"/>
+                  <polygon class="key-black" data-key="69"  data-note="ré♯"  points="105,30 135,30 135,120 105,120 105,30"/>
+                  <polygon class="key-black" data-key="84"  data-note="fa♯"  points="195,30 225,30 225,120 195,120 195,30"/>
+                  <polygon class="key-black" data-key="89"  data-note="sol♯" points="240,30 270,30 270,120 240,120 240,30"/>
+                  <polygon class="key-black" data-key="85"  data-note="la♯"  points="285,30 315,30 315,120 285,120 285,30"/>
+                  <polygon class="key-black" data-key="79"  data-note="do♯"  points="375,30 405,30 405,120 375,120 375,30"/>
+                  <polygon class="key-black" data-key="80"  data-note="ré♯"  points="420,30 450,30 450,120 420,120 420,30"/>
+                  
+                  <text class="key-text" x="50"  y="225" fill="black">A</text>
+                  <text class="key-text" x="95"  y="225" fill="black">S</text>
+                  <text class="key-text" x="140" y="225" fill="black">D</text>
+                  <text class="key-text" x="185" y="225" fill="black">F</text>
+                  <text class="key-text" x="230" y="225" fill="black">G</text>
+                  <text class="key-text" x="275" y="225" fill="black">H</text>
+                  <text class="key-text" x="320" y="225" fill="black">J</text>
+                  <text class="key-text" x="365" y="225" fill="black">K</text>
+                  <text class="key-text" x="410" y="225" fill="black">L</text>
+                  <text class="key-text" x="455" y="225" fill="black">;</text>
+                  <text class="key-text" x="75"  y="110" fill="white">W</text>
+                  <text class="key-text" x="120" y="110" fill="white">E</text>
+                  <text class="key-text" x="210" y="110" fill="white">T</text>
+                  <text class="key-text" x="255" y="110" fill="white">Y</text>
+                  <text class="key-text" x="300" y="110" fill="white">U</text>
+                  <text class="key-text" x="390" y="110" fill="white">O</text>
+                  <text class="key-text" x="435" y="110" fill="white">P</text>
+        
+                  <text class="note-text" x="50"  y="260" data-key="65"  fill="aqua">Do</text>
+                  <text class="note-text" x="95"  y="260" data-key="83"  fill="aqua">Ré</text>
+                  <text class="note-text" x="140" y="260" data-key="68"  fill="aqua">Mi</text>
+                  <text class="note-text" x="185" y="260" data-key="70"  fill="aqua">Fa</text>
+                  <text class="note-text" x="230" y="260" data-key="71"  fill="aqua">Sol</text>
+                  <text class="note-text" x="275" y="260" data-key="72"  fill="aqua">La</text>
+                  <text class="note-text" x="320" y="260" data-key="74"  fill="aqua">Si</text>
+                  <text class="note-text" x="365" y="260" data-key="75"  fill="aqua">Do</text>
+                  <text class="note-text" x="410" y="260" data-key="76"  fill="aqua">Ré</text>
+                  <text class="note-text" x="455" y="260" data-key="186" fill="aqua">Mi</text>
+                  <text class="note-text" x="75"  y="20"  data-key="87"  fill="aqua">Do♯</text>
+                  <text class="note-text" x="120" y="20"  data-key="69"  fill="aqua">Ré♯</text>
+                  <text class="note-text" x="210" y="20"  data-key="84"  fill="aqua">Fa♯</text>
+                  <text class="note-text" x="255" y="20"  data-key="89"  fill="aqua">Sol♯</text>
+                  <text class="note-text" x="300" y="20"  data-key="85"  fill="aqua">La♯</text>
+                  <text class="note-text" x="390" y="20"  data-key="79"  fill="aqua">Do♯</text>
+                  <text class="note-text" x="435" y="20"  data-key="80"  fill="aqua">Ré♯</text>
+                </svg>
+              </div>
+            </div>
           </div>
-          <div class="feature col">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="#0d6efd" class="bi bi-2-square-fill" viewBox="0 0 16 16">
-                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm4.646 6.24v.07H5.375v-.064c0-1.213.879-2.402 2.637-2.402 1.582 0 2.613.949 2.613 2.215 0 1.002-.6 1.667-1.287 2.43l-.096.107-1.974 2.22v.077h3.498V12H5.422v-.832l2.97-3.293c.434-.475.903-1.008.903-1.705 0-.744-.557-1.236-1.313-1.236-.843 0-1.336.615-1.336 1.306"/>
-                  </svg>
-            </div>
-            <h3 class="fs-2 text-body-emphasis">Featured title</h3>
-            <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-            <a href="#" class="icon-link">
-              Jouer!
-              <svg class="bi"><use xlink:href="#chevron-right"/></svg>
-            </a>
+        </div>
+        <div id="rows-table" class="row">
+          <div class="col">
+            <div id="datatable">
+              <table class="table glass text-aqua">
+                  <thead>
+                      <tr>
+                          <th colspan="16" class="text-center">Cycle des quintes</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td class="text-center align-middle" rowspan="1">
+                              <p class="fw-bold" title="Tonalité">Tonalité</p>
+                          </td>
+                          <td class="text-center align-middle">7 ♭<img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/C-flat-major_a-flat-minor.svg/80px-C-flat-major_a-flat-minor.svg.png"/></td>
+                          <td class="text-center align-middle">6 ♭<img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/G-flat-major_e-flat-minor.svg/80px-G-flat-major_e-flat-minor.svg.png"/></td>
+                          <td class="text-center align-middle">5 ♭<img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/D-flat-major_b-flat-minor.svg/80px-D-flat-major_b-flat-minor.svg.png"/></td>
+                          <td class="text-center align-middle">4 ♭<img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/A-flat-major_f-minor.svg/80px-A-flat-major_f-minor.svg.png"/></td>
+                          <td class="text-center align-middle">3 ♭<img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/E-flat-major_c-minor.svg/80px-E-flat-major_c-minor.svg.png"/></td>
+                          <td class="text-center align-middle">2 ♭<img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/B-flat-major_g-minor.svg/80px-B-flat-major_g-minor.svg.png"/></td>
+                          <td class="text-center align-middle">1 ♭<img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/F-major_d-minor.svg/80px-F-major_d-minor.svg.png"/></td>
+                          <td class="text-center align-middle">0  <img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/C-major_a-minor.svg/80px-C-major_a-minor.svg.png"/></td>
+                          <td class="text-center align-middle">1 ♯<img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/G-major_e-minor.svg/80px-G-major_e-minor.svg.png"/></td>
+                          <td class="text-center align-middle">2 ♯<img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/D-major_b-minor.svg/80px-D-major_b-minor.svg.png"/></td>
+                          <td class="text-center align-middle">3 ♯<img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/A-major_f-sharp-minor.svg/80px-A-major_f-sharp-minor.svg.png"/></td>
+                          <td class="text-center align-middle">4 ♯<img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/E-major_c-sharp-minor.svg/80px-E-major_c-sharp-minor.svg.png"/></td>
+                          <td class="text-center align-middle">5 ♯<img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/B-major_g-sharp-minor.svg/80px-B-major_g-sharp-minor.svg.png"/></td>
+                          <td class="text-center align-middle">6 ♯<img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/F-sharp-major_d-sharp-minor.svg/80px-F-sharp-major_d-sharp-minor.svg.png"/></td>
+                          <td class="text-center align-middle">7 ♯<img class="w-100 filter-aqua" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/C-sharp-major_a-sharp-minor.svg/80px-C-sharp-major_a-sharp-minor.svg.png"/></td>
+                      </tr>
+                      <tr>
+                          <td class="text-center" rowspan="1">
+                              <p class="fw-bold" title="Mode majeur">Mode majeur</p>
+                          </td>
+                          <td class="text-center align-middle"><a title="Do bémol majeur">do♭ majeur</a></td>
+                          <td class="text-center align-middle"><a title="Sol bémol majeur">sol♭ majeur</a></td>
+                          <td class="text-center align-middle"><a title="Ré bémol majeur">ré♭ majeur</a></td>
+                          <td class="text-center align-middle"><a title="La bémol majeur">la♭ majeur</a></td>
+                          <td class="text-center align-middle"><a title="Mi bémol majeur">mi♭ majeur</a></td>
+                          <td class="text-center align-middle"><a title="Si bémol majeur">si♭ majeur</a></td>
+                          <td class="text-center align-middle"><a title="Fa majeur">fa majeur</a></td>
+                          <td class="text-center align-middle"><a title="Do majeur">do majeur</a></td>
+                          <td class="text-center align-middle"><a title="Sol majeur">sol majeur</a></td>
+                          <td class="text-center align-middle"><a title="Ré majeur">ré majeur</a></td>
+                          <td class="text-center align-middle"><a title="La majeur">la majeur</a></td>
+                          <td class="text-center align-middle"><a title="Mi majeur">mi majeur</a></td>
+                          <td class="text-center align-middle"><a title="Si majeur">si majeur</a></td>
+                          <td class="text-center align-middle"><a title="Fa dièse majeur">fa♯ majeur</a></td>
+                          <td class="text-center align-middle"><a title="Do dièse majeur">do♯ majeur</a></td>
+                      </tr>
+                      <tr>
+                          <td class="text-center" rowspan="1">
+                              <p class="fw-bold"title="Mode mineur">Mode mineur</p>
+                          </td>
+                          <td class="text-center align-middle"><a title="La bémol mineur">la♭ mineur</a></td>
+                          <td class="text-center align-middle"><a title="Mi bémol mineur">mi♭ mineur</a></td>
+                          <td class="text-center align-middle"><a title="Si bémol mineur">si♭ mineur</a></td>
+                          <td class="text-center align-middle"><a title="Fa mineur">fa mineur</a></td>
+                          <td class="text-center align-middle"><a title="Do mineur">do mineur</a></td>
+                          <td class="text-center align-middle"><a title="Sol mineur">sol mineur</a></td>
+                          <td class="text-center align-middle"><a title="Ré mineur">ré mineur</a></td>
+                          <td class="text-center align-middle"><a title="La mineur">la mineur</a></td>
+                          <td class="text-center align-middle"><a title="Mi mineur">mi mineur</a></td>
+                          <td class="text-center align-middle"><a title="Si mineur">si mineur</a></td>
+                          <td class="text-center align-middle"><a title="Fa dièse mineur">fa♯ mineur</a></td>
+                          <td class="text-center align-middle"><a title="Do dièse mineur">do♯ mineur</a></td>
+                          <td class="text-center align-middle"><a title="Sol dièse mineur">sol♯ mineur</a></td>
+                          <td class="text-center align-middle"><a title="Ré dièse mineur">ré♯ mineur</a></td>
+                          <td class="text-center align-middle"><a title="La dièse mineur">la♯ mineur</a></td>
+                      </tr>
+                  </tbody>
+              </table>
           </div>
-          <div class="feature col">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="#0d6efd" class="bi bi-3-square-fill" viewBox="0 0 16 16">
-                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm5.918 8.414h-.879V7.342h.838c.78 0 1.348-.522 1.342-1.237 0-.709-.563-1.195-1.348-1.195-.79 0-1.312.498-1.348 1.055H5.275c.036-1.137.95-2.115 2.625-2.121 1.594-.012 2.608.885 2.637 2.062.023 1.137-.885 1.776-1.482 1.875v.07c.703.07 1.71.64 1.734 1.917.024 1.459-1.277 2.396-2.93 2.396-1.705 0-2.707-.967-2.754-2.144H6.33c.059.597.68 1.06 1.541 1.066.973.006 1.6-.563 1.588-1.354-.006-.779-.621-1.318-1.541-1.318"/>
-                  </svg>
-            </div>
-            <h3 class="fs-2 text-body-emphasis">Featured title</h3>
-            <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-            <a href="#" class="icon-link">
-              Jouer!
-              <svg class="bi"><use xlink:href="#chevron-right"/></svg>
-            </a>
           </div>
         </div>
       </div>
 
+      <audio data-key="65"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/040.wav"></audio>
+      <audio data-key="87"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/041.wav"></audio>
+      <audio data-key="83"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/042.wav"></audio>
+      <audio data-key="69"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/043.wav"></audio>
+      <audio data-key="68"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/044.wav"></audio>
+      <audio data-key="70"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/045.wav"></audio>
+      <audio data-key="84"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/046.wav"></audio>
+      <audio data-key="71"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/047.wav"></audio>
+      <audio data-key="89"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/048.wav"></audio>
+      <audio data-key="72"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/049.wav"></audio>
+      <audio data-key="85"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/050.wav"></audio>
+      <audio data-key="74"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/051.wav"></audio>
+      <audio data-key="75"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/052.wav"></audio>
+      <audio data-key="79"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/053.wav"></audio>
+      <audio data-key="76"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/054.wav"></audio>
+      <audio data-key="80"  src="http://carolinegabriel.com/demo/js-keyboard/sounds/055.wav"></audio>
+      <audio data-key="186" src="http://carolinegabriel.com/demo/js-keyboard/sounds/056.wav"></audio>
+    </main>
   </body>
 </html>
