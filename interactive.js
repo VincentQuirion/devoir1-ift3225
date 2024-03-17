@@ -355,13 +355,14 @@ document.addEventListener('DOMContentLoaded', () => {
       mouse_down = false;
     });
 
-    key.addEventListener('mouseenter', (_e) => {
-      if(!mouse_down) return;
-      const key_code = key.getAttribute('data-key');
-      const note = key.getAttribute('data-note');
-      onKeyPlayed(key_code, note);
-      key.classList.add('active');
-    });
+    // key.addEventListener('mouseenter', (_e) => {
+    //   // if(!mouse_down) return;
+    //   // const key_code = key.getAttribute('data-key');
+    //   // const note = key.getAttribute('data-note');
+    //   // console.log("mouseenter")
+    //   // onKeyPlayed(key_code, note);
+    //   // key.classList.add('active');
+    // });
 
     key.addEventListener('mouseleave', (_e) => {
       key.classList.remove('active');
