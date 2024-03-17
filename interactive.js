@@ -32,10 +32,13 @@ function onKeyPlayed(key_code, note) {
         mode1Progress++;
         score += 1;
         qbSetScore(score);
+        cfMoveCursorToNote(expected);
       }
-
-      cfMoveCursorToNote(expected);
-
+      else {
+        let prev_score = score;
+        setTimeout(() => alert(`Votre réponse : ${actual}\nBonne réponse : ${expected}\n Vous avez atteint un score de ${prev_score}`), 100)
+        onGameOver()
+      }
       break;
     }
     case 2:
@@ -50,6 +53,11 @@ function onKeyPlayed(key_code, note) {
         score += 1;
         qbSetScore(score);
         onMode(2);
+      }
+      else {
+        let prev_score = score;
+        setTimeout(() => alert(`Votre réponse : ${actual}\nBonne réponse : ${expected}\n Vous avez atteint un score de ${prev_score}`), 100)
+        onGameOver()
       }
       break;
     }
@@ -66,6 +74,11 @@ function onKeyPlayed(key_code, note) {
         qbSetScore(score);
         onMode(3);
       }
+      else {
+        let prev_score = score;
+        setTimeout(() => alert(`Votre réponse : ${actual}\nBonne réponse : ${expected}\n Vous avez atteint un score de ${prev_score}`), 100)
+        onGameOver()
+      }
       break;
     }
   }
@@ -73,6 +86,8 @@ function onKeyPlayed(key_code, note) {
 
 function onGameOver() {
   qbClearTimer();
+  score = 0;
+  qbSetScore(score)
   onMode(0);
 }
 
@@ -97,21 +112,21 @@ function onMode(new_mode) {
     {
       mode1Start = Math.floor(Math.random() * majors.length);
       dMode1Start(majors[mode1Start]);
-      qbStartTimer(60, onGameOver);
+      qbStartTimer(4096, () => {alert(`Temps écoulé!\n Vous avez atteint un score de ${score}`) ; onGameOver()});
       break;
     }
     case 2:
     {
       mode2Major = Math.floor(Math.random() * majors.length);
       dMode2Start(majors[mode2Major]);
-      qbStartTimer(15, onGameOver);
+      qbStartTimer(4096, () => {alert(`Temps écoulé!\n Vous avez atteint un score de ${score}`) ; onGameOver()});
       break;
     }
     case 3:
     {
       mode3Armor = Math.floor(Math.random() * armors.length)
       dMode3Start(armors[mode3Armor]);
-      qbStartTimer(15, onGameOver);
+      qbStartTimer(4096, () => {alert(`Temps écoulé!\n Vous avez atteint un score de ${score}`) ; onGameOver()});
       break;
     }
   }
@@ -178,7 +193,7 @@ function qbStartTimer(duration, callback = null) {
   timerRemaining = duration;
 
 	timerInterval = setInterval(function(){
-		if(timerRemaining >= -1){
+		if(timerRemaining > 0){
       timerRemaining--;
 			timer.style.strokeDashoffset = (duration - timerRemaining) / duration;
 		} else {      
@@ -186,7 +201,7 @@ function qbStartTimer(duration, callback = null) {
         callback();
       }
 		}  
-	}, 1000);
+	}, 1);
 }
 
 function qbClearTimer() {
