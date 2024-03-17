@@ -97,6 +97,9 @@ body {
 
 .piano-container {
   padding: 5%;
+
+  display: flex;
+  justify-content: center;
 }
 
 .piano-border {
@@ -106,8 +109,10 @@ body {
 }
 
 .piano {
-  width: 100%;
-  height: auto;
+  /* width: 100%; */
+  /* height: auto; */
+  height: 40vh;
+  /* width: 100%; */
 }
 
 .key-white {
