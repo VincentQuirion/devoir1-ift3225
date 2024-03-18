@@ -2,7 +2,7 @@
 
 body {
   height: 100%;
-  background-image: url("background.png");
+  background-image: url("assets/background.png");
   background-size: cover;
 }
 
@@ -65,6 +65,7 @@ body {
   stroke-linecap: round;
   transform-origin: center center;
   transform: rotate(-90deg);
+  transition: stroke-dashoffset 1s linear;
 }
 
 #qb-title {
