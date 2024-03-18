@@ -59,8 +59,6 @@ function onKeyPlayed(key_code, note) {
       actual = note;
       expected = majors[mode3Armor];
 
-      console.log(actual, expected);
-
       if (enharmonic(actual, expected)) {
         score += 5;
         qbSetScore(score);
@@ -282,7 +280,6 @@ function enharmonic(note1, note2) {
   note1Sharp = note1.endsWith("♭") ? noteToSharp[note1] : note1;
   note2Sharp = note2.endsWith("♭") ? noteToSharp[note2] : note2;
 
-  console.log(note1Sharp, note2Sharp); // TODO remove
   return note1Sharp == note2Sharp;
 }
 
