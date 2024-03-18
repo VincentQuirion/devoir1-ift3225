@@ -24,32 +24,33 @@ function onKeyPlayed(key_code, note) {
       actual = note;
       expected = majors[(mode1Progress + mode1Start) % majors.length];
 
-      console.log(actual, expected);
-
       if (enharmonic(actual, expected)) {
-
-        console.log("Correct");
         mode1Progress++;
         score += 1;
         qbSetScore(score);
+        cfMoveCursorToNote(expected);
       }
-
-      cfMoveCursorToNote(expected);
-
+      else {
+        let prev_score = score;
+        setTimeout(() => alert(`Votre réponse : ${actual}\nBonne réponse : ${expected}\n Vous avez atteint un score de ${prev_score}`), 100)
+        onGameOver()
+      }
       break;
     }
     case 2:
     {
       actual = note;
       expected = majors[mode2Major];
-
-      console.log(actual, expected);
-
+      
       if (enharmonic(actual, expected)) {
-        console.log("Correct");
-        score += 1;
+        score += 5;
         qbSetScore(score);
         onMode(2);
+      }
+      else {
+        let prev_score = score;
+        setTimeout(() => alert(`Votre réponse : ${actual}\nBonne réponse : ${expected}\n Vous avez atteint un score de ${prev_score}`), 100)
+        onGameOver()
       }
       break;
     }
@@ -61,10 +62,14 @@ function onKeyPlayed(key_code, note) {
       console.log(actual, expected);
 
       if (enharmonic(actual, expected)) {
-        console.log("Correct");
-        score += 1;
+        score += 5;
         qbSetScore(score);
         onMode(3);
+      }
+      else {
+        let prev_score = score;
+        setTimeout(() => alert(`Votre réponse : ${actual}\nBonne réponse : ${expected}\n Vous avez atteint un score de ${prev_score}`), 100)
+        onGameOver()
       }
       break;
     }
@@ -73,6 +78,8 @@ function onKeyPlayed(key_code, note) {
 
 function onGameOver() {
   qbClearTimer();
+  score = 0;
+  qbSetScore(score)
   onMode(0);
 }
 
@@ -97,21 +104,21 @@ function onMode(new_mode) {
     {
       mode1Start = Math.floor(Math.random() * majors.length);
       dMode1Start(majors[mode1Start]);
-      qbStartTimer(60, onGameOver);
+      qbStartTimer(30, () => {alert(`Temps écoulé!\n Vous avez atteint un score de ${score}`) ; onGameOver()});
       break;
     }
     case 2:
     {
       mode2Major = Math.floor(Math.random() * majors.length);
       dMode2Start(majors[mode2Major]);
-      qbStartTimer(15, onGameOver);
+      qbStartTimer(10, () => {alert(`Temps écoulé!\n Vous avez atteint un score de ${score}`) ; onGameOver()});
       break;
     }
     case 3:
     {
       mode3Armor = Math.floor(Math.random() * armors.length)
       dMode3Start(armors[mode3Armor]);
-      qbStartTimer(15, onGameOver);
+      qbStartTimer(10, () => {alert(`Temps écoulé!\n Vous avez atteint un score de ${score}`) ; onGameOver()});
       break;
     }
   }
@@ -178,7 +185,7 @@ function qbStartTimer(duration, callback = null) {
   timerRemaining = duration;
 
 	timerInterval = setInterval(function(){
-		if(timerRemaining >= -1){
+		if(timerRemaining > 0){
       timerRemaining--;
 			timer.style.strokeDashoffset = (duration - timerRemaining) / duration;
 		} else {      
@@ -261,17 +268,17 @@ function cfMoveCursorToNote(note) {
 // Data Fetching & Utilities
 //
 
-const noteToSharp = {
-  "sol♭" : "fa♯",
-  "ré♭" : "do♯",
-  "la♭" : "sol♯",
-  "mi♭" : "ré♯",
-  "si♭" : "la♯",
-  "fa♭" : "mi♯",
-  "do♭" : "si♯",
-};
-
 function enharmonic(note1, note2) {
+  const noteToSharp = {
+    "sol♭" : "fa♯",
+    "ré♭" : "do♯",
+    "la♭" : "sol♯",
+    "mi♭" : "ré♯",
+    "si♭" : "la♯",
+    "fa♭" : "mi♯",
+    "do♭" : "si♯",
+  };
+
   note1Sharp = note1.endsWith("♭") ? noteToSharp[note1] : note1;
   note2Sharp = note2.endsWith("♭") ? noteToSharp[note2] : note2;
 
@@ -312,9 +319,6 @@ function loadData() {
   // Encore du formattage nécessaire
   data.splice(0, 2)
 
-  // Retourne les données
-  console.log(data)
-
   return data;
 }
 
@@ -338,14 +342,6 @@ document.addEventListener('DOMContentLoaded', () => {
     key.addEventListener('mouseup', (_e) => {
       key.classList.remove('active');
       mouse_down = false;
-    });
-
-    key.addEventListener('mouseenter', (_e) => {
-      if(!mouse_down) return;
-      const key_code = key.getAttribute('data-key');
-      const note = key.getAttribute('data-note');
-      onKeyPlayed(key_code, note);
-      key.classList.add('active');
     });
 
     key.addEventListener('mouseleave', (_e) => {

@@ -2,7 +2,7 @@
 
 body {
   height: 100%;
-  background-image: url("background.png");
+  background-image: url("assets/background.png");
   background-size: cover;
 }
 
@@ -65,6 +65,7 @@ body {
   stroke-linecap: round;
   transform-origin: center center;
   transform: rotate(-90deg);
+  transition: stroke-dashoffset 1s linear;
 }
 
 #qb-title {
@@ -97,6 +98,9 @@ body {
 
 .piano-container {
   padding: 5%;
+
+  display: flex;
+  justify-content: center;
 }
 
 .piano-border {
@@ -106,8 +110,10 @@ body {
 }
 
 .piano {
-  width: 100%;
-  height: auto;
+  /* width: 100%; */
+  /* height: auto; */
+  height: 40vh;
+  /* width: 100%; */
 }
 
 .key-white {
